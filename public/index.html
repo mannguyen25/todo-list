@@ -1,11 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=account_circle,add,add_task,arrow_drop_down,chevron_right,grid_view,inbox,keyboard_arrow_down,notifications,search,tag,today,view_sidebar"
+    />
+    <link rel="icon" type="image/x-icon" href="../public/icons/to-do-96.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <title>To-Do</title>
+  </head>
+
+  <body>
+    <div id="todo-app">
+      <nav id="sidebar">
+        <div id="profile-header">
+          <button type="button" class="user-profile">
+            <span class="material-symbols-outlined"> account_circle </span>
+            <span class="label">User Name</span>
+            <span class="material-symbols-outlined drop-down"> arrow_drop_down </span>
+          </button>
+          <div class="user-actions">
+            <button type="button" id="notifications">
+              <span class="material-symbols-outlined"> notifications </span>
+            </button>
+            <button type="button" id="view-sidebar">
+              <span class="material-symbols-outlined" id="toggle-sidebar"> view_sidebar </span>
+            </button>
+          </div>
+        </div>
+        <div id="add-task">
+          <button type="button">
+            <span class="material-symbols-outlined"> add_task </span>
+            <span class="label">Add Task</span>
+          </button>
+        </div>
+        <div id="navigation">
+            <ul class="sidebar-actions">
+                <li>
+                  <button type="button">
+                    <span class="material-symbols-outlined"> search </span>
+                    <span class="label">Search</span>
+                  </button>
+                </li>
+                <li>
+                  <button type="button">
+                    <span class="material-symbols-outlined"> inbox </span>
+                    <span class="label">Inbox</span>
+                  </button>
+                </li>
+                <li class="active">
+                    <button type="button">
+                      <span class="material-symbols-outlined"> today </span>
+                      <span class="label">Today</span>
+                    </button>
+                  </li>
+            </ul>
+            <div class="project-container">
+                <div class="project-container-header">
+                    <h3>My Projects</h3>
+                    <button type="button">
+                        <span class="material-symbols-outlined"> add </span>
+                    </button>
+                    <button type="button" class="collapse-btn">
+                        <span class="material-symbols-outlined"> keyboard_arrow_down </span>
+                    </button>
+                </div>
+                <ul class="project-list show">
+                    <div>
+                        <li class="active">
+                            <button type="button">
+                                <span class="material-symbols-outlined"> tag </span>
+                                Project 1
+                            </button>                        
+                        </li>
+                        <li>
+                            <button type="button">
+                                <span class="material-symbols-outlined"> tag </span>
+                                Project 2
+                            </button>                        
+                        </li>
+                        <li>
+                            <button type="button">
+                                <span class="material-symbols-outlined"> tag </span>
+                                Project 3
+                            </button>                        
+                        </li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+      </nav>
+      <div class="main-content">hello</div>
+    </div>
+  </body>
 </html>

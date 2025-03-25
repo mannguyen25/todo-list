@@ -1,0 +1,243 @@
+#sidebar {
+    --_background-color: var(--background-color, --background);
+    --_text-color: var(--text-color, --text);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-sizing: border-box;
+    width: 420px;
+    box-shadow: 1px 0px 20px var(--text);
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    align-self: start;
+    font-size: 1.5rem;
+    transition: 300ms ease-in-out;
+    overflow: hidden;
+    text-wrap: nowrap;
+
+    & #toggle-sidebar {
+        font-variation-settings: "wght" 400;
+    }
+
+    & ul {
+        list-style: none;
+    }
+
+    & button {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        color: var(--text-color);
+        background-color: var(--background-color);
+        border: none;
+        outline: none;
+        padding: 0.5em;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+    & .material-symbols-outlined {
+        flex-shrink: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        height: 80px;
+        width: 100%;
+        border-right: none;
+        border-top: 1px solid var(--text);
+        position: fixed;
+        top: unset;
+        bottom: 0;
+        padding: 0;
+        display: grid;
+        grid-auto-columns: 1fr;
+        justify-items: center;
+        align-items: center;
+        grid-auto-flow: column;
+        overflow-x: auto;
+
+        & #profile-header {
+            flex-direction: row;
+            align-items: flex-start;
+        }
+
+        & #navigation,
+        .sidebar-actions {
+            flex-direction: row;
+        }
+
+        button .label,
+        h3,
+        #view-sidebar,
+        .project-list button span,
+        .drop-down {
+            display: none;
+        }
+
+        .project-list {
+            display: none;
+        }
+
+        .project-list.show {
+            position: fixed;
+            padding: 0;
+            bottom: 80px;
+            left: 0;
+            box-sizing: border-box;
+            height: 60px;
+            width: 100%;
+            display: flex;
+            background-color: var(--secondary);
+
+            >div {
+                display: flex;
+                overflow-x: auto;
+            }
+
+            & li {
+                display: inline-flex;
+            }
+
+            & button {
+                width: auto;
+                padding: 0.5em 1em;
+            }
+        }
+
+        .collapse-btn {
+            & .material-symbols-outlined {
+                transform: rotate(180deg);
+                transition: rotate 300ms ease-in;
+            }
+        }
+
+        .rotate {
+            rotate: 180deg;
+        }
+    }
+}
+
+#sidebar li:not([class*="active"]) button:hover,
+#profile-header button:hover,
+#add-task button:hover,
+.project-container-header button:hover {
+    --background-color: var(--secondary);
+    --text-color: var(--primary-light);
+}
+
+#sidebar.close {
+    padding: 5px;
+    width: 60px;
+
+    & #toggle-sidebar {
+        font-variation-settings: "FILL" 1;
+    }
+
+    & .user-actions {
+        gap: 0.5em;
+    }
+}
+
+.collapse-btn {
+    & .material-symbols-outlined {
+        transition: transform 300ms ease-in;
+    }
+}
+
+.rotate {
+    transform: rotate(-90deg);
+}
+
+#profile-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    & .user-actions {
+        margin-left: auto;
+    }
+}
+
+.user-profile,
+.user-actions {
+    display: flex;
+}
+
+.user-profile {
+    gap: 1rem;
+}
+
+#navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#add-task.hide,
+#navigation.hide {
+    display: none;
+}
+
+.project-container-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    & h3 {
+        margin-right: auto;
+    }
+}
+
+#add-task button {
+    --text-color: var(--primary-dark);
+    width: 100%;
+
+    .material-symbols-outlined {
+        font-variation-settings: "wght" 700;
+    }
+}
+
+.sidebar-actions {
+    display: flex;
+    flex-direction: column;
+
+    & .active {
+        --background-color: var(--primary);
+        --text-color: var(--primary-dark);
+    }
+
+    & button {
+        width: 100%;
+    }
+}
+
+.project-list {
+    display: grid;
+    transition: 300ms ease-in-out;
+    grid-template-rows: 0fr;
+    padding-left: 1em;
+
+    >div {
+        overflow: hidden;
+    }
+
+    & li button {
+        width: 100%;
+    }
+
+    & .active button {
+        --background-color: var(--accent);
+
+        &:hover {
+            --background-color: var(--accent);
+        }
+    }
+}
+
+
+.project-list.show {
+    grid-template-rows: 1fr;
+}

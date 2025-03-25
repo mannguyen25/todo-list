@@ -1,0 +1,126 @@
+/* 1. Use a more-intuitive box-sizing model */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* 3. Enable keyword animations */
+html {
+    interpolate-size: allow-keywords;
+}
+
+body {
+    /* 4. Add accessible line-height */
+    line-height: 1.5;
+    /* 5. Improve text rendering */
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 6. Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+/* 7. Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* 8. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+    text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-wrap: balance;
+}
+
+/*
+    10. Create a root stacking context
+  */
+#root,
+#__next {
+    isolation: isolate;
+}
+
+:root {
+    /* define colors */
+    --text: #2E2C28;
+    --background: hsl(30, 13%, 73%);
+    --primary-light: hsl(19, 8%, 90%);
+    --primary: hsl(19, 69%, 65%);
+    --primary-dark: hsl(19, 88%, 19%);
+    --secondary: hsl(33, 13%, 41%);
+    --accent: hsl(156, 30%, 52%);
+
+
+    /* semantic colors */
+    --red-300: hsl(5, 74%, 72%);
+    --red-400: hsl(1, 97%, 65%);
+    --red-500: hsl(3, 17%, 25%);
+    --green-300: hsl(120, 39%, 76%);
+    --green-400: hsl(120, 69%, 65%);
+    --green-500: hsl(120, 85%, 30%);
+    --blue-300: hsl(206, 70%, 74%);
+    --blue-400: hsl(206, 46%, 49%);
+    --blue-500: hsl(207, 88%, 20%);
+    --yellow-300: hsl(51, 82%, 78%);
+    --yellow--400: hsl(51, 69%, 65%);
+    --yellow-500: hsl(51, 80%, 25%);
+
+    font-family: "Funnel Sans", sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    overflow-y: scroll;
+    background-color: var(--background);
+}
+
+#todo-app {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+    #todo-app {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    .main-content{
+        padding: 2em 1em 60px 1em;
+    }    
+}
