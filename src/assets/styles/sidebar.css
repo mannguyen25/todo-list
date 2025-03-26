@@ -72,7 +72,7 @@
         button .label,
         h3,
         #view-sidebar,
-        .project-list button span,
+        .project-list button:not([class~="delete-btn"]) span,
         .drop-down {
             display: none;
         }
@@ -131,10 +131,10 @@
         rotate: -90deg;
     }    
 }
-#sidebar li:not([class*="active"]) button:hover,
+#sidebar .sidebar-actions li:not([class*="active"]) button:hover,
 #profile-header button:hover,
 #add-task button:hover,
-.project-container-header button:hover {
+.project-container-header button:hover{
     --background-color: var(--secondary);
     --text-color: var(--primary-light);
 }
@@ -221,19 +221,43 @@
     grid-template-rows: 0fr;
     padding-left: 1em;
 
-    >div {
+    li {
         overflow: hidden;
     }
 
-    & li button {
+    & .project-container {
+        display: flex;
         width: 100%;
+        background-color: var(--background-color);
+        & :first-child {
+            flex: 1;
+            & div {
+                text-align: left;
+                flex: 10;
+            }
+        }
+        & .delete-btn {
+            flex-shrink: 0;
+            transition: transform 300ms ease-in-out;
+        }
+        & .delete-btn:hover {
+            transform: scale(1.2);
+        }
+        &:hover{
+            --background-color: var(--secondary);
+            --text-color: var(--primary-light);
+        }
+        & button {
+            --background-color: transparent;
+        }
     }
 
-    & .active button {
+    & .active {
         --background-color: var(--accent);
 
         &:hover {
             --background-color: var(--accent);
+            --text-color: var(--text-color);
         }
     }
 }
