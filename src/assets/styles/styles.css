@@ -111,14 +111,11 @@ body {
 #todo-app {
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: 1rem;
 }
 
 @media screen and (max-width: 768px) {
     #todo-app {
-        display: grid;
         grid-template-columns: 1fr;
-        gap: 1rem;
     }
     .main-content{
         padding: 2em 1em 60px 1em;

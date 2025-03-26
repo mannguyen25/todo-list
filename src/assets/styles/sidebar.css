@@ -120,6 +120,17 @@
     }
 }
 
+@media (min-width: 768px) {
+    .collapse-btn {
+        & .material-symbols-outlined {
+            transition: rotate 300ms ease-in;
+        }
+    }
+    
+    .rotate {
+        rotate: -90deg;
+    }    
+}
 #sidebar li:not([class*="active"]) button:hover,
 #profile-header button:hover,
 #add-task button:hover,
@@ -139,16 +150,6 @@
     & .user-actions {
         gap: 0.5em;
     }
-}
-
-.collapse-btn {
-    & .material-symbols-outlined {
-        transition: transform 300ms ease-in;
-    }
-}
-
-.rotate {
-    transform: rotate(-90deg);
 }
 
 #profile-header {
