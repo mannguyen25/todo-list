@@ -5,7 +5,7 @@
     flex-direction: column;
     height: 100vh;
     box-sizing: border-box;
-    width: 420px;
+    width: 400px;
     box-shadow: 1px 0px 20px var(--text);
     padding: 1rem;
     position: sticky;
