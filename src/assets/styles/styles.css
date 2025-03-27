@@ -112,6 +112,10 @@ body {
     display: grid;
     grid-template-columns: auto 1fr;
 }
+.main-content{
+    display: flex;
+    justify-content: center;
+}
 
 @media screen and (max-width: 768px) {
     #todo-app {

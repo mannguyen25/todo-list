@@ -7,7 +7,7 @@ const ScreenController = (() => {
     let projectOne = Project('project #1');
     let projectTwo = Project('project #2');
     projectOne.addTask(Task('Task #1', 'do stuff', Date.now()));
-    projectOne.addTask(Task('Task #2', 'other stuff', Date.now() + 3600000));
+    projectOne.addTask(Task('Task #2', 'I must take out the trash erwrewerw', Date.now() + 3600000));
     projectManager.addProject(projectOne);
     projectManager.activeProject = projectOne.name;
     projectManager.addProject(projectTwo);
@@ -41,6 +41,21 @@ const ScreenController = (() => {
                 label.setAttribute('for', input.id);
                 listElement.appendChild(input);
                 listElement.appendChild(label);
+                const taskActions = document.createElement("div");
+                taskActions.classList.add("task-actions");
+                const editButton = document.createElement("button");
+                const editIcon = document.createElement("span");
+                editIcon.classList.add("material-symbols-outlined");
+                editIcon.textContent = "edit";
+                editButton.appendChild(editIcon);
+                taskActions.appendChild(editButton);
+                const deleteButton = document.createElement("button");
+                const deleteIcon = document.createElement("span");
+                deleteIcon.classList.add("material-symbols-outlined");
+                deleteIcon.textContent = "delete";
+                deleteButton.appendChild(deleteIcon);
+                taskActions.appendChild(deleteButton);
+                listElement.appendChild(taskActions);
                 taskListContainer.appendChild(listElement);
                 input.addEventListener("change", (e) => {
                     task.isCompleted = e.target.checked;

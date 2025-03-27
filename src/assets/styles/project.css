@@ -1,9 +1,11 @@
 .project-main-container {
     display: flex;
+    align-items: flex-start;
     flex-direction: column;
+    width: 50vw;
     gap: 1rem;
-    align-items: start;
     padding: 3em 2em;
+    min-height: 100vh;
 
     & input[type='text'] {
         font-size: 2em;
@@ -11,21 +13,52 @@
         border: none;
         outline: none;
         padding: 5px;
+        width: 100%;
     }
 
     ul {
         list-style-type: none;
+        width: 100%;
     }
 
     .task-container {
         display: flex;
         align-items: center;
+        justify-content: space-between;
         font-size: 1.5em;
-
+        width: 100%;
+        gap: 0.5em;
+        .task-actions {
+            display: flex;
+            flex-shrink: 0;
+            gap: 0.25em;
+            & button {
+                flex-shrink: 0;
+            }
+        }
+        & button {
+            display: flex;
+            align-items: center;
+            background-color: var(--background-color);
+            border: none;
+            outline: none;
+            transition: 200ms ease-in-out;
+            &:hover{
+                background-color: var(--secondary);
+                color: var(--primary-light);    
+                transform: scale(1.2);
+            }
+        }
         & label {
             cursor: pointer;
             display: flex;
             align-items: center;
+            overflow-x: hidden;
+            span {
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow-x: inherit;
+            }
         }
 
         & label:hover::before,
@@ -54,6 +87,7 @@
         }
 
         & label::before {
+            flex-shrink: 0;
             content: '';
             width: 1em;
             height: 1em;
