@@ -76,7 +76,21 @@
             </div>
         </div>
       </nav>
-      <div class="main-content">hello</div>
+      <div class="main-content"></div>
+      <dialog class="task-dialog">
+        <form method="dialog">
+          <div class="dialog-body">
+            <input type="text" id="task-name" name="task-name" placeholder="Take name" required />
+            <textarea rows="1" cols="26" id="task-description" name="task-description" placeholder="Description"></textarea>
+            <label for="due-date">Due Date</label>
+            <input type="date" id="due-date" name="due-date" required />
+          </div>
+          <div class="dialog-footer">
+            <button type="submit" id="save-task">Save</button>
+            <button type="reset" id="cancel-task">Cancel</button>
+          </div>
+        </form>
+      </dialog>
     </div>
   </body>
 </html>

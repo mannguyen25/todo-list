@@ -15,6 +15,12 @@ const ScreenController = (() => {
     projectManager.addProject(projectTwo);
     const projectListContainer = document.querySelector(".project-list li");
     const mainContent = document.querySelector(".main-content");
+    const dialog = document.querySelector(".task-dialog");
+    const closeDialogButton = document.getElementById("cancel-task");
+    closeDialogButton.addEventListener("click", () => {
+        dialog.close();
+    });
+        dialog.close();
     const displayTasks = () => {
         const taskListContainer = document.createElement("ul");
         projectManager
@@ -62,11 +68,15 @@ const ScreenController = (() => {
     };
     const createAddButton = () => {
         const addTaskButton = document.createElement("button");
+        addTaskButton.type = "button";
         addTaskButton.classList.add("add-task-btn");
         const addIcon = document.createElement("span");
         addIcon.classList.add("material-symbols-outlined");
         addIcon.textContent = "add";
         addTaskButton.appendChild(addIcon);
+        addTaskButton.addEventListener("click", () => {
+            dialog.showModal();
+        });
         return addTaskButton;
     };
     const displayActiveProject = () => {
@@ -80,11 +90,16 @@ const ScreenController = (() => {
             projectTitle.name = projectManager.activeProject.split(" ").join("-");
             projectTitle.placeholder = projectManager.activeProject;
             projectTitle.addEventListener("change", (e) => {
-                projectManager.updateProject(projectManager.activeProject, {
+                if (projectManager.updateProject(projectManager.activeProject, {
                     name: e.target.value,
-                });
-                projectManager.activeProject = e.target.value;
-                displayProjects();
+                })){
+                    projectManager.activeProject = e.target.value;
+                    displayProjects();
+                }
+                else {
+                    // temporary alert for duplicate project names
+                    alert("Project name already exists!");
+                }
             });
             projectContainer.appendChild(projectTitle);
             const addTaskButton = createAddButton();

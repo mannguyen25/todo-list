@@ -34,11 +34,16 @@ class ProjectManager {
         this.projectList = this.projectList.filter((project) => project.name !== projectName);
     }
     updateProject(projectName, props) {
-        const projectIndex = this.projectList.findIndex((p) => p.name === projectName);
-        if (projectIndex === -1) return;
-        for (const key in props) {
-            if (this.projectList[projectIndex].hasOwnProperty(key)) this.projectList[projectIndex][key] = props[key];
+        if (props?.name !== undefined) {
+            const existingKey = this.projectList.findIndex((p) => p.name === props.name);
+            if (existingKey !== -1) return false;
         }
+        const projectIndex = this.projectList.findIndex((p) => p.name === projectName);
+        if (projectIndex === -1) return false;
+        for (const key in props) {
+            if (this.projectList[projectIndex].hasOwnProperty(key) && this.projectList[projectIndex] != props[key]) this.projectList[projectIndex][key] = props[key];
+        }
+        return true;
     }
     getProjectByName(projectName) {
         return this.projectList.find((project) => project.name === projectName);

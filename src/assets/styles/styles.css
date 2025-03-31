@@ -125,3 +125,77 @@ body {
         padding: 2em 1em 60px 1em;
     }    
 }
+.task-dialog {
+    top: 50%;
+    left: 50%;
+    border-radius: 0.5em;
+    border: none;
+    outline: none;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    box-shadow: 0px 0px 1em 0.25em rgba(0, 0, 0, 0.4);
+    animation: fade-out 0.7s ease-out;
+    &:open {
+        animation: fade-in 0.4s ease-out;
+      }
+      
+    &:open::backdrop {
+        animation: backdrop-fade-in 0.4s ease-out forwards;
+    }
+}
+.task-dialog form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em;
+    gap: 1em;
+    max-width: 40vw;
+}
+.dialog-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    #task-description {
+        flex: 1;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+    }
+}
+  
+  /* Animation keyframes */
+  
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+      display: none;
+    }
+  
+    100% {
+      opacity: 1;
+      display: block;
+    }
+  }
+  
+  @keyframes fade-out {
+    0% {
+      opacity: 1;
+      display: block;
+    }
+  
+    100% {
+      opacity: 0;
+      display: none;
+    }
+  }
+  
+  @keyframes backdrop-fade-in {
+    0% {
+      background-color: rgb(0 0 0 / 0%);
+    }
+  
+    100% {
+      background-color: rgb(0 0 0 / 25%);
+    }
+  }
