@@ -3,13 +3,17 @@ const Task = (name, desc, dueDate, priority = 2) => {
 };
 
 const Project = (name, tasks = []) => {
-    const addTask = (task) => {
-        tasks.push(task);
+    let project = {};
+    project.name = name;
+    project.tasks = tasks;
+
+    project.addTask = (task) => {
+        project.tasks.push(task);
     };
-    const removeTask = (taskId) => {
-        tasks = tasks.filter((task) => task.id !== taskId);
+    project.removeTask = (taskName) => {
+        project.tasks = tasks.filter((task) => task.name !== taskName);
     };
-    return { name, tasks, addTask, removeTask };
+    return project;
 };
 
 class ProjectManager {

@@ -9,11 +9,27 @@
 
     & input[type='text'] {
         font-size: 2em;
-        border-radius: 4px;
+        border-radius: .25rem;
         border: none;
         outline: none;
         padding: 5px;
         width: 100%;
+    }
+
+    .add-task-btn {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 3em;
+        background-color: var(--primary);
+        border: none;
+        border-radius: .25rem;
+        transition: 200ms ease-in-out;
+        &:hover {
+            background-color: var(--primary-dark);
+            color: var(--primary-light);
+        }
     }
 
     ul {
