@@ -17,12 +17,52 @@ const ScreenController = (() => {
     const mainContent = document.querySelector(".main-content");
     const dialog = document.querySelector(".task-dialog");
     const closeDialogButton = document.getElementById("cancel-task");
+    const saveButton = document.getElementById("save-task");
+    saveButton.addEventListener("click", () => {
+        const taskName = document.getElementById("task-name").value;
+        const taskDescription = document.getElementById("task-description").value;
+        const taskDueDate = document.getElementById("task-due-date").value;
+        const priority = document.getElementById("task-priority").value;
+        const task = Task(taskName, taskDescription, taskDueDate, priority);
+        const projectName = document.getElementById("task-project").value;
+        // need to differentiate between new and existing tasks
+        projectManager.getProjectByName(projectName).addTask(task);
+        const projectContainer = document.querySelector(".project-main-container");
+        projectContainer.removeChild(projectContainer.lastChild);
+        displayTasks(projectContainer);
+        clearModal();
+        dialog.close();
+    });
     closeDialogButton.addEventListener("click", () => {
         dialog.close();
     });
-        dialog.close();
-    const displayTasks = () => {
+    const clearModal = () => {
+        const inputs = document.querySelectorAll(".dialog-body input");
+        inputs.forEach((input) => {
+            input.value = "";
+            input.required = false? true: false;
+        });
+    }
+    const sidebarAddTask = document.querySelector("#add-task button");
+    sidebarAddTask.addEventListener("click", () => {
+        addProjectOptions();
+        dialog.showModal();
+    });
+    const addProjectOptions = () => {
+        const projectOptions = document.getElementById("task-project");
+        projectOptions.innerHTML = "";
+        projectManager.getAllProjects(projectOptions).forEach(project => {
+            const option = document.createElement("option");
+            option.value = project.name;
+            option.text = project.name;
+            // select option is active project
+            option.selected = project.name === projectManager.activeProject;
+            projectOptions.add(option);
+        });
+    };
+    const displayTasks = (projectContainer) => {
         const taskListContainer = document.createElement("ul");
+        taskListContainer.classList.add("task-list");
         projectManager
             .getProjectByName(projectManager.activeProject)
             .tasks.forEach((task) => {
@@ -54,6 +94,13 @@ const ScreenController = (() => {
                 deleteButton.appendChild(deleteIcon);
                 taskActions.appendChild(deleteButton);
                 listElement.appendChild(taskActions);
+                editButton.addEventListener("click", () => {
+                    dialog.showModal();
+                    document.getElementById("task-name").value = task.name;
+                    document.getElementById("task-description").value = task.desc;
+                    document.getElementById("task-due-date").value = task.dueDate;
+                    document.getElementById("task-priority").value = task.priority;
+                });
                 // actions below
                 deleteButton.addEventListener("click", () => {
                     projectManager.getProjectByName(projectManager.activeProject).removeTask(task.name);
@@ -64,7 +111,7 @@ const ScreenController = (() => {
                     task.isCompleted = e.target.checked;
                 });
             });
-        return taskListContainer;
+        projectContainer.appendChild(taskListContainer);
     };
     const createAddButton = () => {
         const addTaskButton = document.createElement("button");
@@ -75,6 +122,7 @@ const ScreenController = (() => {
         addIcon.textContent = "add";
         addTaskButton.appendChild(addIcon);
         addTaskButton.addEventListener("click", () => {
+            addProjectOptions();
             dialog.showModal();
         });
         return addTaskButton;
@@ -104,8 +152,7 @@ const ScreenController = (() => {
             projectContainer.appendChild(projectTitle);
             const addTaskButton = createAddButton();
             projectContainer.appendChild(addTaskButton);
-            const taskListContainer = displayTasks();
-            projectContainer.appendChild(taskListContainer);
+            displayTasks(projectContainer);
             mainContent.appendChild(projectContainer);
         }
     };

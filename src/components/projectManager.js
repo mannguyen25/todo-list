@@ -6,9 +6,18 @@ const Project = (name, tasks = []) => {
     let project = {};
     project.name = name;
     project.tasks = tasks;
-
+    project.tasks.sort((a, b) => b.priority - a.priority);
     project.addTask = (task) => {
-        project.tasks.push(task);
+        // see if task already exists in the project
+        const taskIndex = project.tasks.findIndex(el => task.name === el.name);
+        if (taskIndex === -1){
+            project.tasks.push(task);
+            // sort tasks by priority (highest to lowest)
+            project.tasks.sort((a, b) => b.priority - a.priority);
+        }
+        else {
+            project.tasks[taskIndex] = task;
+        }
     };
     project.removeTask = (taskName) => {
         project.tasks = tasks.filter((task) => task.name !== taskName);
