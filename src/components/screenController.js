@@ -1,21 +1,58 @@
 import { Project, ProjectManager, Task } from "../components/projectManager";
 import "../assets/styles/project.css";
-const ScreenController = (() => {
+const ScreenController = (projectList=[]) => {
+    const populateDummyData = (projectManager) => {
+        let projectOne = Project("Welcome");
+        let projectTwo = Project("First Project");
+        projectOne.addTask(Task("Organize these tasks into a new section 🗂", "Use the three dots icon at the top of this project then Add section.", '2025-04-01'));
+        projectOne.addTask(
+            Task("Start your own project! 🚀", "Create a plan to code a website", '2025-04-01')
+        );
+        projectManager.addProject(projectOne);
+        projectManager.activeProject = projectOne.name;
+        projectManager.addProject(projectTwo);
+    }
+    const populateData = (projectManager) => {
+        projectList.forEach((project) => {
+            projectManager.addProject(project);
+        });
+        projectManager.activeProject = projectList[0].name;
+    }
     const projectManager = new ProjectManager();
-
-    // dummy data
-    let projectOne = Project("project #1");
-    let projectTwo = Project("project #2");
-    projectOne.addTask(Task("Task #1", "do stuff", Date.now()));
-    projectOne.addTask(
-        Task("Task #2", "I must take out the trash erwrewerw", Date.now() + 3600000)
-    );
-    projectManager.addProject(projectOne);
-    projectManager.activeProject = projectOne.name;
-    projectManager.addProject(projectTwo);
+    if (projectList.length === 0) {
+        populateDummyData(projectManager);
+    }
+    else {
+        populateData(projectManager);
+    }
     const projectListContainer = document.querySelector(".project-list li");
     const mainContent = document.querySelector(".main-content");
     const dialog = document.querySelector(".task-dialog");
+
+    const inboxBtn = document.getElementById("inbox");
+    const todayBtn = document.getElementById("today");
+    const buttons = { "inbox": inboxBtn, "today": todayBtn };
+    Object.keys(buttons).forEach((button) => {
+        buttons[button].addEventListener("click", (e) => {
+            Object.keys(buttons).forEach((btn) => {
+                buttons[btn].classList.remove('active');
+            });
+            e.target.classList.toggle('active');
+            switch (e.target.id) {
+                case "inbox":
+                    mainContent.innerHTML = '';
+                    const projectContainer = document.createElement("div");
+                    projectContainer.classList.add("project-main-container");
+                    mainContent.appendChild(projectContainer);
+                    displayActiveProject(projectContainer);
+                    break;
+                case "today":
+                    displayAllTasks(mainContent, true);
+                    break;
+            }
+        });
+    })
+    // dialog modal
     const projectDialog = document.querySelector(".create-project-dialog");
     const closeDialogButton = document.getElementById("cancel-task");
     const addProjectButton = document.getElementById("add-project-btn");
@@ -30,8 +67,8 @@ const ScreenController = (() => {
     saveProjectButton.addEventListener("click", () => {
         const projectName = document.getElementById("project-name").value;
         const project = Project(projectName);
-        // need to differentiate between new and existing projects
         projectManager.addProject(project);
+        localStorage.setItem("projectList", JSON.stringify(projectManager.projectList));
         projectDialog.close();
         displayProjects();
     });
@@ -47,7 +84,13 @@ const ScreenController = (() => {
         projectManager.getProjectByName(projectName).addTask(task);
         const projectContainer = document.querySelector(".project-main-container");
         projectContainer.removeChild(projectContainer.lastChild);
-        displayTasks(projectContainer);
+        if (inboxBtn.classList.contains("active")) {
+            displayProjectTasks(projectContainer);
+        }
+        else if (todayBtn.classList.contains("active")) {
+            displayAllTasks(projectContainer, true);
+        }
+        localStorage.setItem("projectList", JSON.stringify(projectManager.projectList));
         clearModal();
         dialog.close();
     });
@@ -58,8 +101,73 @@ const ScreenController = (() => {
         const inputs = document.querySelectorAll(".dialog-body input");
         inputs.forEach((input) => {
             input.value = "";
-            input.required = false? true: false;
+            input.required = false ? true : false;
         });
+    }
+    const displayAllTasks = (mainContentContainer, dateFilter) => {
+        mainContentContainer.innerHTML = '';
+        const projectContainer = document.createElement("div");
+        projectContainer.classList.add("project-main-container");
+        mainContentContainer.appendChild(projectContainer);
+        const taskListContainer = document.createElement("ul");
+        taskListContainer.classList.add("task-list");
+        projectManager
+            .getAllTasks()
+            .filter((task) => {
+                const dueDate = new Date(task.dueDate)
+                const now = Date.now();
+                const timeDifference = dueDate - now; // Difference in milliseconds
+                const dayDifference = timeDifference / (1000 * 60 * 60 * 24);
+                return dateFilter ? Math.abs(dayDifference) <= 1 : true;
+            })
+            .forEach((task) => {
+                const listElement = document.createElement("li");
+                listElement.classList.add("task-container");
+                const input = document.createElement("input");
+                input.checked = task.isCompleted;
+                input.type = "checkbox";
+                input.id = `${task.name.split(" ").join("-")}`;
+                const label = document.createElement("label");
+                const description = document.createElement("span");
+                description.textContent = `${task.name} - ${task.desc}`;
+                label.appendChild(description);
+                label.setAttribute("for", input.id);
+                listElement.appendChild(input);
+                listElement.appendChild(label);
+                const taskActions = document.createElement("div");
+                taskActions.classList.add("task-actions");
+                const editButton = document.createElement("button");
+                const editIcon = document.createElement("span");
+                editIcon.classList.add("material-symbols-outlined");
+                editIcon.textContent = "edit";
+                editButton.appendChild(editIcon);
+                taskActions.appendChild(editButton);
+                const deleteButton = document.createElement("button");
+                const deleteIcon = document.createElement("span");
+                deleteIcon.classList.add("material-symbols-outlined");
+                deleteIcon.textContent = "delete";
+                deleteButton.appendChild(deleteIcon);
+                taskActions.appendChild(deleteButton);
+                listElement.appendChild(taskActions);
+                editButton.addEventListener("click", () => {
+                    dialog.showModal();
+                    document.getElementById("task-name").value = task.name;
+                    document.getElementById("task-description").value = task.desc;
+                    document.getElementById("task-due-date").value = task.dueDate;
+                    document.getElementById("task-priority").value = task.priority;
+                    addProjectOptions();
+                });
+                // actions below
+                deleteButton.addEventListener("click", () => {
+                    projectManager.getProjectByName(projectManager.activeProject).removeTask(task.name);
+                    taskListContainer.removeChild(listElement);
+                });
+                taskListContainer.appendChild(listElement);
+                input.addEventListener("change", (e) => {
+                    task.isCompleted = e.target.checked;
+                });
+            });
+        projectContainer.appendChild(taskListContainer);
     }
     const sidebarAddTask = document.querySelector("#add-task button");
     sidebarAddTask.addEventListener("click", () => {
@@ -78,7 +186,7 @@ const ScreenController = (() => {
             projectOptions.add(option);
         });
     };
-    const displayTasks = (projectContainer) => {
+    const displayProjectTasks = (projectContainer) => {
         const taskListContainer = document.createElement("ul");
         taskListContainer.classList.add("task-list");
         projectManager
@@ -159,7 +267,7 @@ const ScreenController = (() => {
             projectTitle.addEventListener("change", (e) => {
                 if (projectManager.updateProject(projectManager.activeProject, {
                     name: e.target.value,
-                })){
+                })) {
                     projectManager.activeProject = e.target.value;
                     displayProjects();
                 }
@@ -171,7 +279,7 @@ const ScreenController = (() => {
             projectContainer.appendChild(projectTitle);
             const addTaskButton = createAddButton();
             projectContainer.appendChild(addTaskButton);
-            displayTasks(projectContainer);
+            displayProjectTasks(projectContainer);
             mainContent.appendChild(projectContainer);
         }
     };
@@ -223,4 +331,7 @@ const ScreenController = (() => {
     };
     displayActiveProject();
     displayProjects();
-})();
+    return projectManager.projectList;
+};
+
+export default ScreenController;

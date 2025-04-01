@@ -151,7 +151,7 @@
     }
 }
 
-#sidebar .sidebar-actions li:not([class*="active"]) button:hover,
+#sidebar .sidebar-actions button:not([class*="active"]):hover,
 #profile-header button:hover,
 #add-task button:hover,
 .project-container-header button:hover {
