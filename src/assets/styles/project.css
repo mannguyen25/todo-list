@@ -1,8 +1,18 @@
+@media screen and (max-width: 768px) {
+    .project-main-container{
+        width: 90vw;
+    }
+}
+
+@media (min-width: 768px) {
+    .project-main-container{
+        width: 50vw;
+    }
+}
 .project-main-container {
     display: flex;
     align-items: flex-start;
     flex-direction: column;
-    width: 50vw;
     gap: 1rem;
     padding: 3em 2em;
     min-height: 100vh;
@@ -35,6 +45,9 @@
     ul {
         list-style-type: none;
         width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
     }
 
     .task-container {

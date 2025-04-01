@@ -92,13 +92,14 @@
             display: flex;
             background-color: var(--secondary);
 
-            >div {
+            > div {
                 display: flex;
                 overflow-x: auto;
             }
 
             & li {
                 display: inline-flex;
+                overflow-x: scroll;
             }
 
             & button {

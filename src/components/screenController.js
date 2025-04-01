@@ -74,7 +74,7 @@ const ScreenController = (() => {
                 input.id = `${task.name.split(" ").join("-")}`;
                 const label = document.createElement("label");
                 const description = document.createElement("span");
-                description.textContent = `${task.desc}`;
+                description.textContent = `${task.name} - ${task.desc}`;
                 label.appendChild(description);
                 label.setAttribute("for", input.id);
                 listElement.appendChild(input);
@@ -100,6 +100,7 @@ const ScreenController = (() => {
                     document.getElementById("task-description").value = task.desc;
                     document.getElementById("task-due-date").value = task.dueDate;
                     document.getElementById("task-priority").value = task.priority;
+                    addProjectOptions();
                 });
                 // actions below
                 deleteButton.addEventListener("click", () => {
@@ -167,6 +168,7 @@ const ScreenController = (() => {
                 projectContainer.classList.add("active");
             }
             const button = document.createElement("button");
+            button.type = "button";
             const tag = document.createElement("span");
             const text = document.createElement("div");
             tag.classList.add("material-symbols-outlined");
