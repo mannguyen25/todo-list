@@ -16,7 +16,25 @@ const ScreenController = (() => {
     const projectListContainer = document.querySelector(".project-list li");
     const mainContent = document.querySelector(".main-content");
     const dialog = document.querySelector(".task-dialog");
+    const projectDialog = document.querySelector(".create-project-dialog");
     const closeDialogButton = document.getElementById("cancel-task");
+    const addProjectButton = document.getElementById("add-project-btn");
+    addProjectButton.addEventListener("click", () => {
+        projectDialog.showModal();
+    });
+    const cancelProjectButton = document.getElementById("cancel-project");
+    cancelProjectButton.addEventListener("click", () => {
+        projectDialog.close();
+    });
+    const saveProjectButton = document.getElementById("save-project");
+    saveProjectButton.addEventListener("click", () => {
+        const projectName = document.getElementById("project-name").value;
+        const project = Project(projectName);
+        // need to differentiate between new and existing projects
+        projectManager.addProject(project);
+        projectDialog.close();
+        displayProjects();
+    });
     const saveButton = document.getElementById("save-task");
     saveButton.addEventListener("click", () => {
         const taskName = document.getElementById("task-name").value;

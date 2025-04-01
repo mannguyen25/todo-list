@@ -60,6 +60,13 @@ class ProjectManager {
     getAllProjects() {
         return this.projectList;
     }
+    getAllTasks() {
+        let tasks = this.projectList.reduce((acc, project) => {
+            return acc.concat(project.tasks);
+        }, []);
+        tasks.sort((a, b) => b.priority - a.priority);
+        return tasks;
+    }
 
 }
 

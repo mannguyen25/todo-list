@@ -62,7 +62,7 @@
             <div class="project-container">
                 <div class="project-container-header">
                     <h3>My Projects</h3>
-                    <button type="button">
+                    <button type="button" id="add-project-btn">
                         <span class="material-symbols-outlined"> add </span>
                     </button>
                     <button type="button" class="collapse-btn">
@@ -109,6 +109,20 @@
           <div class="dialog-footer">
             <button type="submit" id="save-task">Save</button>
             <button type="reset" id="cancel-task">Cancel</button>
+          </div>
+        </form>
+      </dialog>
+      <dialog class="create-project-dialog">
+        <form method="dialog">
+          <div class="dialog-body">
+            <label class="input" for="project-name">
+              <input class="input__field" type="text" id="project-name" name="project-name" placeholder=" " required/>
+              <span class="input__label">Project name</span>
+            </label>
+          </div>
+          <div class="dialog-footer">
+            <button type="submit" id="save-project">Save</button>
+            <button type="reset" id="cancel-project">Cancel</button>
           </div>
         </form>
       </dialog>
