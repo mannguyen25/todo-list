@@ -38,10 +38,10 @@ const ScreenController = (projectList=[]) => {
                 buttons[btn].classList.remove('active');
             });
             e.target.classList.toggle('active');
+            const projectContainer = document.createElement("div");
             switch (e.target.id) {
                 case "inbox":
                     mainContent.innerHTML = '';
-                    const projectContainer = document.createElement("div");
                     projectContainer.classList.add("project-main-container");
                     mainContent.appendChild(projectContainer);
                     displayActiveProject(projectContainer);
@@ -101,7 +101,7 @@ const ScreenController = (projectList=[]) => {
         const inputs = document.querySelectorAll(".dialog-body input");
         inputs.forEach((input) => {
             input.value = "";
-            input.required = false ? true : false;
+            input.required = input.required === false ? true : false;
         });
     }
     const displayAllTasks = (mainContentContainer, dateFilter) => {
