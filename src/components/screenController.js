@@ -14,9 +14,10 @@ const ScreenController = (projectList=[]) => {
     }
     const populateData = (projectManager) => {
         projectList.forEach((project) => {
-            projectManager.addProject(project);
+            projectManager.addProject(Project(project.name, project.tasks));
         });
         projectManager.activeProject = projectList[0].name;
+        console.log(projectManager);
     }
     const projectManager = new ProjectManager();
     if (projectList.length === 0) {
@@ -81,6 +82,7 @@ const ScreenController = (projectList=[]) => {
         const task = Task(taskName, taskDescription, taskDueDate, priority);
         const projectName = document.getElementById("task-project").value;
         // need to differentiate between new and existing tasks
+        console.log( projectManager.getProjectByName(projectName));
         projectManager.getProjectByName(projectName).addTask(task);
         const projectContainer = document.querySelector(".project-main-container");
         projectContainer.removeChild(projectContainer.lastChild);
