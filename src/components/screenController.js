@@ -163,6 +163,7 @@ const ScreenController = (projectList=[]) => {
                 deleteButton.addEventListener("click", () => {
                     projectManager.getProjectByName(projectManager.activeProject).removeTask(task.name);
                     taskListContainer.removeChild(listElement);
+                    localStorage.setItem("projectList", JSON.stringify(projectManager.projectList));
                 });
                 taskListContainer.appendChild(listElement);
                 input.addEventListener("change", (e) => {
@@ -234,6 +235,7 @@ const ScreenController = (projectList=[]) => {
                 deleteButton.addEventListener("click", () => {
                     projectManager.getProjectByName(projectManager.activeProject).removeTask(task.name);
                     taskListContainer.removeChild(listElement);
+                    localStorage.setItem("projectList", JSON.stringify(projectManager.projectList));
                 });
                 taskListContainer.appendChild(listElement);
                 input.addEventListener("change", (e) => {
