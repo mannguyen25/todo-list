@@ -314,6 +314,7 @@ const ScreenController = (projectList=[]) => {
             projectContainer.appendChild(deleteButton);
             deleteButton.addEventListener("click", () => {
                 projectManager.removeProject(project.name);
+                localStorage.setItem("projectList", JSON.stringify(projectManager.projectList));
                 displayProjects();
             });
             button.appendChild(tag);
